@@ -316,7 +316,15 @@ class YamlTestItem(pytest.Item):
     ) -> None:
         super().__init__(name, parent, config)
         self.files = files
-        self.environment_variables = environment_variables
+        should_inherit_environment = (
+            self.config.option.mypy_inherit_environment
+            if self.config.option.mypy_inherit_environment is not None
+            else self.config.option.mypy_same_process
+        )
+        self.environment_variables = {
+            **(os.environ if should_inherit_environment else {}),
+            **environment_variables,
+        }
         self.disable_cache = disable_cache
         self.expect_fail = expect_fail
         self.expected_output = expected_output

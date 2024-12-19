@@ -213,3 +213,18 @@ def pytest_addoption(parser: Parser) -> None:
         action="store_true",
         help="Use closed schema to validate YAML test cases, which won't allow any extra keys (does not work well with `--mypy-extension-hook`)",
     )
+    group.addoption(
+        "--mypy-inherit-environment",
+        dest="mypy_inherit_environment",
+        action="store_const",
+        const=True,
+        default=None,
+        help="Inherit environment. Defaults to True for same process, false for out-of-process",
+    )
+    group.addoption(
+        "--disable-mypy-inherit-environment",
+        dest="mypy_inherit_environment",
+        action="store_const",
+        const=False,
+        help="Explictly disable environment inheriting."
+    )

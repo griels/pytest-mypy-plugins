@@ -20,6 +20,7 @@ _rendering_env = jinja2.Environment()
 def temp_environ() -> Iterator[None]:
     """Allow the ability to set os.environ temporarily"""
     environ = dict(os.environ)
+    os.environ.clear()
     try:
         yield
     finally:
